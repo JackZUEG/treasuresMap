@@ -21,10 +21,10 @@ public abstract class MapUtils {
 
     public static boolean isSquareMountainOrTaken(Map map, Coordinates coordinates) throws ElementOutOfTheMapException {
         Square square = map.getSquare(coordinates);
-        if(square.getSquareType() == SquareType.MOUNTAIN || !square.isTaken()){
-            return false;
-        } else{
+        if(square.getSquareType() == SquareType.MOUNTAIN || square.isTaken()){
             return true;
+        } else{
+            return false;
         }
     }
 

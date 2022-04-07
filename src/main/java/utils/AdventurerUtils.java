@@ -39,17 +39,21 @@ public abstract class AdventurerUtils {
 
 
     public static Coordinates getCoordinatesAfterMovement(Adventurer adventurer){
-        Coordinates coordinates = adventurer.getCoordinates();
+        Coordinates coordinates = new Coordinates(adventurer.getCoordinates());
         if(adventurer.getNextMovement() == Movement.FORWARD){
             switch(adventurer.getDirection()){
                 case NORTH:
-                    coordinates.setCoordinateX(coordinates.getCoordinateX() - 1);
+                    coordinates.setCoordinateY(coordinates.getCoordinateY() - 1);
+                    break;
                 case SOUTH:
-                    coordinates.setCoordinateX(coordinates.getCoordinateX() + 1);
+                    coordinates.setCoordinateY(coordinates.getCoordinateY() + 1);
+                    break;
                 case WEST:
-                    coordinates.setCoordinateX(coordinates.getCoordinateY() - 1);
+                    coordinates.setCoordinateX(coordinates.getCoordinateX() - 1);
+                    break;
                 case EAST:
-                    coordinates.setCoordinateX(coordinates.getCoordinateY() + 1);
+                    coordinates.setCoordinateX(coordinates.getCoordinateX() + 1);
+                    break;
             }
         }
         return coordinates;

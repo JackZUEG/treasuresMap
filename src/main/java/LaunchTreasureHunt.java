@@ -1,5 +1,6 @@
 import commons.MapBuilder;
 import commons.MapPlayer;
+import commons.MapWriter;
 import model.map.Map;
 
 public class LaunchTreasureHunt {
@@ -7,11 +8,13 @@ public class LaunchTreasureHunt {
 
         try{
             //String fileName = args[0];
-            String fileName = "src/main/resources/map1.txt";
+            String fileName = "src/main/resources/input/map1.txt";
             MapBuilder mapBuilder = new MapBuilder(fileName);
             Map map = mapBuilder.readMap();
 
             MapPlayer.playTreasureMap(map);
+
+            MapWriter.writeTreasureMap(map);
             System.out.println("Jeu termine");
         } catch(Exception e) {
             e.printStackTrace();

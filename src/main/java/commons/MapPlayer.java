@@ -31,17 +31,20 @@ public abstract class MapPlayer {
         }
     }
 
-    public static void playMovement(Map map, Adventurer adventurer) throws ElementOutOfTheMapException, IncorrectMovementException {
+    private static void playMovement(Map map, Adventurer adventurer) throws ElementOutOfTheMapException, IncorrectMovementException {
         Movement movement = adventurer.getNextMovement();
         System.out.println(movement.getValue());
         if(movement.equals(Movement.FORWARD)){
             Coordinates coordAfterMovement = AdventurerUtils.getCoordinatesAfterMovement(adventurer);
 
             if(MapUtils.isCoordinatesInMap(map, coordAfterMovement) && !MapUtils.isSquareMountainOrTaken(map, coordAfterMovement)){
+                map.getSquare(adventurer.getCoordinates()).setTaken(false);
+
                 adventurer.setCoordinates(coordAfterMovement);
                 System.out.println(adventurer.getCoordinates().getCoordinateX());
                 System.out.println(adventurer.getCoordinates().getCoordinateY());
-                map.getSquare(coordAfterMovement).isTaken();
+                map.getSquare(coordAfterMovement).setTaken(true);
+
                 System.out.println("case valid to move");
                 if(MapUtils.isTreasureSquare(map, coordAfterMovement)){
                     System.out.println("treasure found");

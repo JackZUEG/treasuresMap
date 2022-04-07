@@ -4,8 +4,10 @@ import exception.ElementOutOfTheMapException;
 import model.adventurer.Adventurer;
 import model.coordinates.Coordinates;
 import model.square.Square;
+import model.square.SquareTreasure;
 import model.square.SquareType;
 import utils.MapUtils;
+import utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class Map {
             Coordinates coordinatesAdventurer = adventurer.getCoordinates();
             if(!MapUtils.isSquareMountainOrTaken(this, coordinatesAdventurer)){
                 this.listAdventurers.add(adventurer);
+                this.getSquare(coordinatesAdventurer).setTaken(true);
             } else {
                 throw new ElementOutOfTheMapException("La case est deja prise par une montagne ou un aventurier");
             }
@@ -77,4 +80,54 @@ public class Map {
         }
         throw new ElementOutOfTheMapException("La case est en dehors de la carte");
     }
+
+    public String toString(){
+        String[] infos = new String[3];
+        infos[0] = "C";
+        infos[1] = String.valueOf(this.getCoordinates().getCoordinateX());
+        infos[2] = String.valueOf(this.getCoordinates().getCoordinateY());
+        String lineDimMap = StringUtils.buildLine(infos);
+        List<String> listSquaresString = new ArrayList<>();
+        List<String> listAdventurersString = new ArrayList<>();
+
+        for(int x = 0; x < getCoordinates().getCoordinateX(); x++){
+            for(int y = 0; y < getCoordinates().getCoordinateY(); y++){
+                try {
+                    SquareType squareType = getSquare(new Coordinates(x, y)).getSquareType();
+                    if(squareType == SquareType.MOUNTAIN){
+                        infos[0] = "M";
+                    } else if(squareType == SquareType.TREASURE){
+                        infos[0] = "T";
+                        infos = new String[4];
+                        SquareTreasure squareTreasure = (SquareTreasure) getSquare(new Coordinates(x, y));
+                        infos[3] = String.valueOf(squareTreasure.getCountTreasures());
+                    }
+                    infos[1] = String.valueOf(this.getCoordinates().getCoordinateX());
+                    infos[2] = String.valueOf(this.getCoordinates().getCoordinateY());
+
+                    listSquaresString.add(StringUtils.buildLine(infos));
+
+                } catch (ElementOutOfTheMapException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        for(Adventurer adventurer: this.getListAdventurers()){
+            String[] infosAdventurer = new String[3];
+            infosAdventurer[0] = "A";
+            infosAdventurer[1] = adventurer.getName();
+            infosAdventurer[2] = String.valueOf(this.getCoordinates().getCoordinateX());
+            infosAdventurer[3] = String.valueOf(this.getCoordinates().getCoordinateY());
+            infosAdventurer[4] = adventurer.getDirection().toString();
+            infosAdventurer[5] = String.valueOf(adventurer.getRecoveredTreasures());
+            listAdventurersString.add(StringUtils.buildLine(infos));
+        }
+
+        StringBuilder
+
+
+        return
+    }
+
 }
