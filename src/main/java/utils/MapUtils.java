@@ -12,7 +12,10 @@ public abstract class MapUtils {
 
     public static boolean isCoordinatesInMap(Map map, Coordinates coordinates){
         Coordinates coordinatesMap = map.getCoordinates();
-        if(coordinatesMap.getCoordinateX() > coordinates.getCoordinateX() &&  coordinatesMap.getCoordinateY() > coordinates.getCoordinateY()){
+        if(coordinatesMap.getCoordinateX() > coordinates.getCoordinateX()
+                && coordinatesMap.getCoordinateY() > coordinates.getCoordinateY()
+                && 0 <= coordinates.getCoordinateX()
+                && 0 <= coordinates.getCoordinateY()){
             return true;
         } else {
             return false;

@@ -22,7 +22,12 @@ public abstract class MapPlayer {
         while(continueToPlay){
             for(Adventurer adventurer: listAdventurers){
                 if(!adventurer.isOutOfMovements()){
-                    playMovement(map, adventurer);
+                    try{
+                        playMovement(map, adventurer);
+                    } catch(IncorrectMovementException e){
+                        System.out.println(e.getMessage());
+                        break;
+                    }
                 }
             }
             if(MapUtils.isAllAdventurersPlayed(map)){
@@ -33,7 +38,7 @@ public abstract class MapPlayer {
 
     private static void playMovement(Map map, Adventurer adventurer) throws ElementOutOfTheMapException, IncorrectMovementException {
         Movement movement = adventurer.getNextMovement();
-        System.out.println(movement.getValue());
+
         if(movement.equals(Movement.FORWARD)){
             Coordinates coordAfterMovement = AdventurerUtils.getCoordinatesAfterMovement(adventurer);
 
@@ -41,19 +46,15 @@ public abstract class MapPlayer {
                 map.getSquare(adventurer.getCoordinates()).setTaken(false);
 
                 adventurer.setCoordinates(coordAfterMovement);
-                System.out.println(adventurer.getCoordinates().getCoordinateX());
-                System.out.println(adventurer.getCoordinates().getCoordinateY());
                 map.getSquare(coordAfterMovement).setTaken(true);
 
-                System.out.println("case valid to move");
                 if(MapUtils.isTreasureSquare(map, coordAfterMovement)){
-                    System.out.println("treasure found");
                     adventurer.getTreasure();
                     MapUtils.removeTreasure(map, coordAfterMovement);
                 }
             } else {
-                System.out.println("case not valid to move");
-                //throw new IncorrectMovementException("Mouvement non autorise et ignore");
+                adventurer.removeNextMovement();
+                throw new IncorrectMovementException("Un mouvement du joueur "+adventurer.getName()+" non autorise a ete ignore");
             }
 
         } else {

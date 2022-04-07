@@ -6,19 +6,15 @@ public abstract class StringUtils {
         StringBuilder stringBuilder = new StringBuilder();
         String separator = " - ";
 
-        for(String info: infos){
-            if(!info.equals(null)){
-                stringBuilder.append(info);
+        for(int nbInfo = 0; nbInfo < infos.length; nbInfo++){
+            if(!infos[nbInfo].equals(null)){
+                stringBuilder.append(infos[nbInfo]);
             }
-            if(!info.equals(infos[infos.length-1])){
+            if(nbInfo < infos.length - 1){
                 stringBuilder.append(separator);
             }
         }
         return stringBuilder.toString();
-    }
-
-    public static String buildEntireOutput(){
-
     }
 
 }

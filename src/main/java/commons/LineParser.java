@@ -10,7 +10,7 @@ public abstract class LineParser {
     public static Coordinates getMapDimensions(List<String> lines) throws NoDimensionsMapFound {
         for(String line: lines){
             String[] infos = line.replaceAll(" ", "").split("-");
-            if(infos[0].equals("C")){
+            if(infos[0].equals("C") && infos.length > 2){
                 int dimX = Integer.parseInt(infos[1]);
                 int dimY = Integer.parseInt(infos[2]);
                 return new Coordinates(dimX, dimY);

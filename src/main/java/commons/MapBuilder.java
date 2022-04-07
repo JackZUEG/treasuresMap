@@ -1,9 +1,6 @@
 package commons;
 
-import exception.ElementOutOfTheMapException;
-import exception.IncorrectDirectionException;
-import exception.IncorrectMovementException;
-import exception.NoDimensionsMapFound;
+import exception.*;
 import model.adventurer.Adventurer;
 import model.adventurer.Direction;
 import model.coordinates.Coordinates;
@@ -19,62 +16,70 @@ import java.util.stream.Collectors;
 
 public class MapBuilder {
 
-    private String fileName;
-    private File fileMap;
-    private Map map;
-
-    public MapBuilder(String fileName){
-        this.fileName = fileName;
-    }
-
-    public Map readMap(){
+    public static Map readMap(String fileName) throws NoDimensionsMapFound, IncorrectDirectionException, IncorrectMovementException, ElementOutOfTheMapException, InvalidInputFileException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             List<String> linesInFile = reader.lines().collect(Collectors.toList());
-
-            createMap(linesInFile);
-            createElements(linesInFile);
-
-            reader.close();
+            Map map = createMap(linesInFile);
+            createElements(map, linesInFile);
+            return map;
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NoDimensionsMapFound e){
+        } catch (IncorrectDirectionException | IncorrectMovementException e){
             System.out.println(e.getMessage());
-        } catch (IncorrectDirectionException | IncorrectMovementException e) {
-            e.printStackTrace();
-        } catch (ElementOutOfTheMapException e) {
-            e.printStackTrace();
+        } catch (ElementOutOfTheMapException | NoDimensionsMapFound e) {
+            throw e;
         }
-        return this.map;
+        throw new InvalidInputFileException("Le fichier en entree ne possede pas le bon format");
     }
 
-    public void createMap(List<String> lines) throws NoDimensionsMapFound {
-        Coordinates mapDimensions = LineParser.getMapDimensions(lines);
-        this.map = new Map(mapDimensions);
-        this.map.setPlainMap();
+    public static Map createMap(List<String> lines) throws NoDimensionsMapFound {
+        try {
+            Coordinates mapDimensions = LineParser.getMapDimensions(lines);
+            Map map = new Map(mapDimensions);
+            map.setPlainMap();
+            return map;
+        } catch(NoDimensionsMapFound e){
+            throw e;
+        }
     }
 
-    public void createElements(List<String> lines) throws IncorrectDirectionException, IncorrectMovementException, ElementOutOfTheMapException {
+    public static void createElements(Map map, List<String> lines) throws IncorrectDirectionException, IncorrectMovementException, ElementOutOfTheMapException {
         for(String line: lines){
             String[] infos = line.replaceAll(" ", "").split("-");
-            switch(infos[0].charAt(0)){
-                case 'M', 'T':
-                    createSquare(infos);
-                    break;
-                case 'A':
-                    createAdventurer(infos);
-                    break;
+            if(infos.length > 2){
+                switch(infos[0].charAt(0)){
+                    case 'M':
+                        createSquare(map, infos);
+                    case 'T':
+                        if(infos.length > 3){
+                            createSquare(map, infos);
+                        }
+                        break;
+                    case 'A':
+                        if(infos.length > 5){
+                            createAdventurer(map, infos);
+                        }
+                        break;
+                }
+            } else {
+                System.out.println("La ligne du fichier numero "+(lines.indexOf(line)+1)+" a ete ignoree car invalide");
             }
         }
     }
 
-    public void createAdventurer(String[] infos) throws IncorrectMovementException, IncorrectDirectionException, ElementOutOfTheMapException {
+    public static void createAdventurer(Map map, String[] infos) throws IncorrectMovementException, IncorrectDirectionException, ElementOutOfTheMapException {
         Coordinates adventurerCoord = new Coordinates(Integer.parseInt(infos[2]), Integer.parseInt(infos[3]));
         Adventurer adventurer = new Adventurer(infos[1], adventurerCoord, infos[4], infos[5]);
-        this.map.addAdventurer(adventurer);
+        try{
+            map.addAdventurer(adventurer);
+        } catch(ElementOutOfTheMapException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    public void createSquare(String[] infos){
+    public static void createSquare(Map map, String[] infos){
         Square square = new Square(SquareType.PLAIN);
 
         if(infos[0].equals("M")){
@@ -82,6 +87,6 @@ public class MapBuilder {
         } else if(infos[0].equals("T")){
             square = new SquareTreasure(SquareType.TREASURE, Integer.parseInt(infos[3]));
         }
-        this.map.addSquare(new Coordinates(Integer.parseInt(infos[1]), Integer.parseInt(infos[2])), square);
+        map.addSquare(new Coordinates(Integer.parseInt(infos[1]), Integer.parseInt(infos[2])), square);
     }
 }
