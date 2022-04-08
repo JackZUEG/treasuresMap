@@ -1,7 +1,7 @@
 package commons;
 
-import exception.ElementOutOfTheMapException;
 import exception.IncorrectMovementException;
+import exception.MessagesException;
 import model.adventurer.Adventurer;
 import model.adventurer.Movement;
 import model.coordinates.Coordinates;
@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class MapPlayer {
 
 
-    public static void playTreasureMap(Map map) throws ElementOutOfTheMapException, IncorrectMovementException {
+    public static void playTreasureMap(Map map) {
 
         List<Adventurer> listAdventurers = map.getListAdventurers();
         boolean continueToPlay = true;
@@ -36,13 +36,13 @@ public abstract class MapPlayer {
         }
     }
 
-    private static void playMovement(Map map, Adventurer adventurer) throws ElementOutOfTheMapException, IncorrectMovementException {
+    private static void playMovement(Map map, Adventurer adventurer) throws IncorrectMovementException {
         Movement movement = adventurer.getNextMovement();
 
         if(movement.equals(Movement.FORWARD)){
             Coordinates coordAfterMovement = AdventurerUtils.getCoordinatesAfterMovement(adventurer);
 
-            if(MapUtils.isCoordinatesInMap(map, coordAfterMovement) && !MapUtils.isSquareMountainOrTaken(map, coordAfterMovement)){
+            if(MapUtils.isCoordinatesInMap(map, coordAfterMovement) && !MapUtils.isSquareValidToMove(map, coordAfterMovement)){
                 map.getSquare(adventurer.getCoordinates()).setTaken(false);
 
                 adventurer.setCoordinates(coordAfterMovement);
@@ -54,7 +54,7 @@ public abstract class MapPlayer {
                 }
             } else {
                 adventurer.removeNextMovement();
-                throw new IncorrectMovementException("Un mouvement du joueur "+adventurer.getName()+" non autorise a ete ignore");
+                throw new IncorrectMovementException(MessagesException.IncorrectMovementException.getMsg());
             }
 
         } else {

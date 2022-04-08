@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class MapBuilder {
 
-    public static Map readMap(String fileName) throws NoDimensionsMapFound, IncorrectDirectionException, IncorrectMovementException, ElementOutOfTheMapException, InvalidInputFileException {
+    public static Map readMap(String fileName) throws NoDimensionsMapFound, InvalidInputFileException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             List<String> linesInFile = reader.lines().collect(Collectors.toList());
@@ -27,10 +27,10 @@ public class MapBuilder {
             e.printStackTrace();
         } catch (IncorrectDirectionException | IncorrectMovementException e){
             System.out.println(e.getMessage());
-        } catch (ElementOutOfTheMapException | NoDimensionsMapFound e) {
+        } catch (NoDimensionsMapFound e) {
             throw e;
         }
-        throw new InvalidInputFileException("Le fichier en entree ne possede pas le bon format");
+        throw new InvalidInputFileException(MessagesException.InvalidInputFileException.getMsg());
     }
 
     public static Map createMap(List<String> lines) throws NoDimensionsMapFound {
@@ -44,7 +44,7 @@ public class MapBuilder {
         }
     }
 
-    public static void createElements(Map map, List<String> lines) throws IncorrectDirectionException, IncorrectMovementException, ElementOutOfTheMapException {
+    public static void createElements(Map map, List<String> lines) throws IncorrectDirectionException, IncorrectMovementException {
         for(String line: lines){
             String[] infos = line.replaceAll(" ", "").split("-");
             if(infos.length > 2){
@@ -68,12 +68,12 @@ public class MapBuilder {
         }
     }
 
-    public static void createAdventurer(Map map, String[] infos) throws IncorrectMovementException, IncorrectDirectionException, ElementOutOfTheMapException {
+    public static void createAdventurer(Map map, String[] infos) throws IncorrectMovementException, IncorrectDirectionException {
         Coordinates adventurerCoord = new Coordinates(Integer.parseInt(infos[2]), Integer.parseInt(infos[3]));
         Adventurer adventurer = new Adventurer(infos[1], adventurerCoord, infos[4], infos[5]);
         try{
             map.addAdventurer(adventurer);
-        } catch(ElementOutOfTheMapException e){
+        } catch(SquareIsMountainOrTakenException e){
             System.out.println(e.getMessage());
         }
 

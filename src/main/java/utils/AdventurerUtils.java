@@ -2,6 +2,7 @@ package utils;
 
 import exception.IncorrectDirectionException;
 import exception.IncorrectMovementException;
+import exception.MessagesException;
 import model.adventurer.Adventurer;
 import model.adventurer.Direction;
 import model.adventurer.Movement;
@@ -18,7 +19,7 @@ public abstract class AdventurerUtils {
             case 'D':
                 return Movement.TURNRIGHT;
             default:
-                throw new IncorrectMovementException("Le mouvement est incorrect");
+                throw new IncorrectMovementException(MessagesException.IncorrectMovementException.getMsg());
         }
     }
 
@@ -33,7 +34,7 @@ public abstract class AdventurerUtils {
             case "E":
                 return Direction.EAST;
             default:
-                throw new IncorrectDirectionException("La direction est incorrecte");
+                throw new IncorrectDirectionException(MessagesException.IncorrectDirectionException.getMsg());
         }
     }
 

@@ -24,15 +24,24 @@ public class Adventurer {
         this.nextMovements = createMovements(movements);
     }
 
-    private Direction createDirection(String direction) throws IncorrectDirectionException {
-        return AdventurerUtils.getDirection(direction);
+    public Direction createDirection(String direction) throws IncorrectDirectionException {
+        try{
+            return AdventurerUtils.getDirection(direction);
+        } catch(IncorrectDirectionException e){
+            throw e;
+        }
     }
 
-    private List<Movement> createMovements(String movements) throws IncorrectMovementException {
+    public List<Movement> createMovements(String movements) {
         List<Movement> listMovements = new ArrayList<>();
 
         for(int pos = 0; pos < movements.length(); pos++){
-            listMovements.add(AdventurerUtils.getMovement(movements.charAt(pos)));
+            try{
+                Movement movement = AdventurerUtils.getMovement(movements.charAt(pos));
+                listMovements.add(movement);
+            } catch (IncorrectMovementException e){
+                System.out.println(e.getMessage());
+            }
         }
         return listMovements;
     }

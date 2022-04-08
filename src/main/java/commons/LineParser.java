@@ -13,9 +13,11 @@ public abstract class LineParser {
             if(infos[0].equals("C") && infos.length > 2){
                 int dimX = Integer.parseInt(infos[1]);
                 int dimY = Integer.parseInt(infos[2]);
-                return new Coordinates(dimX, dimY);
+                if(dimX > 0 && dimY > 0){
+                    return new Coordinates(dimX, dimY);
+                }
             }
         }
-        throw new NoDimensionsMapFound("Pas de dimensions de carte fournie dans le fichier en parametre");
+        throw new NoDimensionsMapFound("Dimensions de carte non fournie ou incorrecte dans le fichier en parametre");
     }
 }

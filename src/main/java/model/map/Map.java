@@ -1,6 +1,7 @@
 package model.map;
 
-import exception.ElementOutOfTheMapException;
+import exception.MessagesException;
+import exception.SquareIsMountainOrTakenException;
 import model.adventurer.Adventurer;
 import model.coordinates.Coordinates;
 import model.square.Square;
@@ -20,9 +21,7 @@ public class Map {
 
     public Map(){
         this.listAdventurers = new ArrayList<>();
-
     }
-
 
     public Map(Coordinates coordinates) {
         this();
@@ -55,14 +54,14 @@ public class Map {
         this.coordinates = coordinates;
     }
 
-    public void addAdventurer(Adventurer adventurer) throws ElementOutOfTheMapException {
+    public void addAdventurer(Adventurer adventurer) throws SquareIsMountainOrTakenException {
         if(adventurer != null){
             Coordinates coordinatesAdventurer = adventurer.getCoordinates();
-            if(!MapUtils.isSquareMountainOrTaken(this, coordinatesAdventurer) && !isExistAdventurer(adventurer.getName())){
+            if(!MapUtils.isSquareValidToMove(this, coordinatesAdventurer) && !isExistAdventurer(adventurer.getName())){
                 this.listAdventurers.add(adventurer);
                 this.getSquare(coordinatesAdventurer).setTaken(true);
             } else {
-                throw new ElementOutOfTheMapException("La case est deja prise par une montagne ou un aventurier, "+adventurer.getName()+" ne sera pas place sur la carte");
+                throw new SquareIsMountainOrTakenException(MessagesException.SquareIsMountainOrTakenException.getMsg());
             }
         }
     }
@@ -88,11 +87,11 @@ public class Map {
         this.squares[coordinates.getCoordinateX()][coordinates.getCoordinateY()] = square;
     }
 
-    public Square getSquare(Coordinates coordinates) throws ElementOutOfTheMapException {
+    public Square getSquare(Coordinates coordinates) {
         if(MapUtils.isCoordinatesInMap(this, coordinates)){
             return squares[coordinates.getCoordinateX()][coordinates.getCoordinateY()];
         }
-        throw new ElementOutOfTheMapException("La case est en dehors de la carte");
+        return null;
     }
 
     public String toString(){
@@ -106,7 +105,6 @@ public class Map {
 
         for(int x = 0; x < getCoordinates().getCoordinateX(); x++){
             for(int y = 0; y < getCoordinates().getCoordinateY(); y++){
-                try {
                     SquareType squareType = getSquare(new Coordinates(x, y)).getSquareType();
 
                     if(squareType == SquareType.MOUNTAIN){
@@ -127,9 +125,6 @@ public class Map {
                         stringBuilder.append(StringUtils.buildLine(infosSquareTreasure));
                     }
 
-                } catch (ElementOutOfTheMapException e) {
-                    e.printStackTrace();
-                }
             }
         }
 

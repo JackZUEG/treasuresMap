@@ -1,6 +1,5 @@
 package utils;
 
-import exception.ElementOutOfTheMapException;
 import model.adventurer.Adventurer;
 import model.coordinates.Coordinates;
 import model.map.Map;
@@ -22,16 +21,19 @@ public abstract class MapUtils {
         }
     }
 
-    public static boolean isSquareMountainOrTaken(Map map, Coordinates coordinates) throws ElementOutOfTheMapException {
+    public static boolean isSquareValidToMove(Map map, Coordinates coordinates) {
         Square square = map.getSquare(coordinates);
-        if(square.getSquareType() == SquareType.MOUNTAIN || square.isTaken()){
-            return true;
-        } else{
-            return false;
+        if(square != null){
+            if(square.getSquareType() == SquareType.MOUNTAIN || square.isTaken()){
+                return true;
+            } else{
+                return false;
+            }
         }
+        return true;
     }
 
-    public static boolean isTreasureSquare(Map map, Coordinates coordinates) throws ElementOutOfTheMapException {
+    public static boolean isTreasureSquare(Map map, Coordinates coordinates) {
         Square square = map.getSquare(coordinates);
         if(square.getSquareType() == SquareType.TREASURE){
             return true;
@@ -40,7 +42,7 @@ public abstract class MapUtils {
         }
     }
 
-    public static Map removeTreasure(Map map, Coordinates coordinates) throws ElementOutOfTheMapException {
+    public static Map removeTreasure(Map map, Coordinates coordinates) {
         SquareTreasure square = (SquareTreasure) map.getSquare(coordinates);
         square.removeTreasure();
         return map;
