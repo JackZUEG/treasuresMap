@@ -24,7 +24,7 @@ public class MapBuilder {
             createElements(map, linesInFile);
             return map;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new InvalidInputFileException(MessagesException.InvalidInputFileException.getMsg());
         } catch (IncorrectDirectionException | IncorrectMovementException e){
             System.out.println(e.getMessage());
         } catch (NoDimensionsMapFound e) {

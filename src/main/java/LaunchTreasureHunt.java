@@ -6,6 +6,9 @@ import exception.MessagesException;
 import exception.NoDimensionsMapFound;
 import model.map.Map;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class LaunchTreasureHunt {
     public static void main(String[] args) {
 
