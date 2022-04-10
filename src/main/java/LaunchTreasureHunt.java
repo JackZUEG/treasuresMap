@@ -25,7 +25,7 @@ public class LaunchTreasureHunt {
             MapPlayer.playTreasureMap(map);
             System.out.println("-----------Chasse aux tresors terminee-----------");
             MapWriter.writeTreasureMapInFile(map, fileNameOutput);
-            System.out.println("---------Resultat disponible dans output---------");
+            System.out.println("---------Resultat disponible dans target---------");
 
         } catch(NoDimensionsMapFound | InvalidInputFileException e){
             System.out.println(e.getMessage());
