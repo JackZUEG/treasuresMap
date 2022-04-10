@@ -25,8 +25,5 @@ public class LaunchTreasureHunt {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
 }
