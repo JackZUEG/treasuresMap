@@ -2,6 +2,7 @@ import commons.MapBuilder;
 import commons.MapPlayer;
 import commons.MapWriter;
 import exception.InvalidInputFileException;
+import exception.MessagesException;
 import exception.NoDimensionsMapFound;
 import model.map.Map;
 
@@ -9,6 +10,9 @@ public class LaunchTreasureHunt {
     public static void main(String[] args) {
 
         try{
+            if(args.length == 0){
+                throw new InvalidInputFileException(MessagesException.InvalidInputFileException.getMsg());
+            }
             String fileNameOutput = "resultTreasureHunt";
 
             System.out.println("---------------Creation de la carte--------------");
