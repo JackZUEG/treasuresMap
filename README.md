@@ -1,4 +1,4 @@
-# treasuresMap
+# Carte au trésor
 
 Projet realise par Milan Pasquereau pour Carbon IT
 
