@@ -49,11 +49,15 @@ class LineParserTest {
     }
 
     @Test
-    void getMapDimensionsValidExpectCoordinates() throws NoDimensionsMapFound {
-        List<String> lines = new ArrayList<>();
-        lines.add("C - 2 - 5");
-        Coordinates coordinates = new Coordinates(2,5);
+    void getMapDimensionsValidExpectCoordinates() {
+        try{
+            List<String> lines = new ArrayList<>();
+            lines.add("C - 2 - 5");
+            Coordinates coordinates = new Coordinates(2,5);
+            assertTrue(coordinates.equals(LineParser.getMapDimensions(lines)));
+        } catch (NoDimensionsMapFound e){
+            fail(e.getCause());
+        }
 
-        assertTrue(coordinates.equals(LineParser.getMapDimensions(lines)));
     }
 }

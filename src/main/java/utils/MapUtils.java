@@ -25,12 +25,12 @@ public abstract class MapUtils {
         Square square = map.getSquare(coordinates);
         if(square != null){
             if(square.getSquareType() == SquareType.MOUNTAIN || square.isTaken()){
-                return true;
-            } else{
                 return false;
+            } else{
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public static boolean isTreasureSquare(Map map, Coordinates coordinates) {

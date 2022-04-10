@@ -33,7 +33,7 @@ public class MapBuilder {
         throw new InvalidInputFileException(MessagesException.InvalidInputFileException.getMsg());
     }
 
-    public static Map createMap(List<String> lines) throws NoDimensionsMapFound {
+    private static Map createMap(List<String> lines) throws NoDimensionsMapFound {
         try {
             Coordinates mapDimensions = LineParser.getMapDimensions(lines);
             Map map = new Map(mapDimensions);
@@ -44,7 +44,7 @@ public class MapBuilder {
         }
     }
 
-    public static void createElements(Map map, List<String> lines) throws IncorrectDirectionException, IncorrectMovementException {
+    private static void createElements(Map map, List<String> lines) throws IncorrectDirectionException, IncorrectMovementException {
         for(String line: lines){
             String[] infos = line.replaceAll(" ", "").split("-");
             if(infos.length > 2){
@@ -68,7 +68,7 @@ public class MapBuilder {
         }
     }
 
-    public static void createAdventurer(Map map, String[] infos) throws IncorrectMovementException, IncorrectDirectionException {
+    private static void createAdventurer(Map map, String[] infos) throws IncorrectMovementException, IncorrectDirectionException {
         Coordinates adventurerCoord = new Coordinates(Integer.parseInt(infos[2]), Integer.parseInt(infos[3]));
         Adventurer adventurer = new Adventurer(infos[1], adventurerCoord, infos[4], infos[5]);
         try{
@@ -79,13 +79,13 @@ public class MapBuilder {
 
     }
 
-    public static void createSquare(Map map, String[] infos){
+    private static void createSquare(Map map, String[] infos){
         Square square = new Square(SquareType.PLAIN);
 
         if(infos[0].equals("M")){
             square = new Square(SquareType.MOUNTAIN);
         } else if(infos[0].equals("T")){
-            square = new SquareTreasure(SquareType.TREASURE, Integer.parseInt(infos[3]));
+            square = new SquareTreasure(Integer.parseInt(infos[3]));
         }
         map.addSquare(new Coordinates(Integer.parseInt(infos[1]), Integer.parseInt(infos[2])), square);
     }

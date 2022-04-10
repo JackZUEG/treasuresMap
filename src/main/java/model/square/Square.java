@@ -1,5 +1,7 @@
 package model.square;
 
+import java.util.Objects;
+
 public class Square {
 
     private SquareType squareType;

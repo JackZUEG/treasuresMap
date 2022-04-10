@@ -25,10 +25,13 @@ class AdventurerTest {
     }
 
     @Test
-    void createDirectionValidExpectOk() throws IncorrectDirectionException {
-       String direction = "S";
-
-       assertTrue(Direction.SOUTH.equals(adventurer.createDirection(direction)));
+    void createDirectionValidExpectOk() {
+        try{
+            String direction = "S";
+            assertTrue(Direction.SOUTH.equals(adventurer.createDirection(direction)));
+        } catch (IncorrectDirectionException e){
+            fail(e.getCause());
+        }
     }
     @Test
     void createDirectionInvalidExpectIncorrectDirectionException(){
@@ -42,7 +45,7 @@ class AdventurerTest {
     }
 
     @Test
-    void createMovementsOk() throws IncorrectMovementException {
+    void createMovementsOk() {
         List<Movement> listMovements = new ArrayList<>();
         listMovements.add(Movement.FORWARD);
         listMovements.add(Movement.TURNLEFT);

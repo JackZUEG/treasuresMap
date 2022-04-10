@@ -57,7 +57,7 @@ public class Map {
     public void addAdventurer(Adventurer adventurer) throws SquareIsMountainOrTakenException {
         if(adventurer != null){
             Coordinates coordinatesAdventurer = adventurer.getCoordinates();
-            if(!MapUtils.isSquareValidToMove(this, coordinatesAdventurer) && !isExistAdventurer(adventurer.getName())){
+            if(MapUtils.isSquareValidToMove(this, coordinatesAdventurer) && !isExistAdventurer(adventurer.getName())){
                 this.listAdventurers.add(adventurer);
                 this.getSquare(coordinatesAdventurer).setTaken(true);
             } else {

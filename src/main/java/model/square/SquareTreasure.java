@@ -4,8 +4,8 @@ public class SquareTreasure extends Square{
 
     private int countTreasures;
 
-    public SquareTreasure(SquareType squareType, int countTreasures) {
-        super(squareType);
+    public SquareTreasure(int countTreasures) {
+        super(SquareType.TREASURE);
         this.countTreasures = countTreasures;
     }
 
@@ -14,7 +14,9 @@ public class SquareTreasure extends Square{
     }
 
     public void removeTreasure(){
-        this.countTreasures--;
+        if(this.countTreasures > 0){
+            this.countTreasures--;
+        }
     }
 
 

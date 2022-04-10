@@ -9,8 +9,8 @@ import java.io.Writer;
 
 public abstract class MapWriter {
 
-    public static void writeTreasureMapInFile(Map map) throws IOException {
-        Writer fileWriter = new FileWriter("src\\main\\resources\\output\\resultTreasureHunt.txt", false);
+    public static void writeTreasureMapInFile(Map map, String fileNameOutput) throws IOException {
+        Writer fileWriter = new FileWriter(fileNameOutput, false);
         fileWriter.write(writeDimensionsMap(map));
         fileWriter.close();
     }

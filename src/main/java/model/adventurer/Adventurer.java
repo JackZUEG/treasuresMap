@@ -19,7 +19,7 @@ public class Adventurer {
     public Adventurer(String name, Coordinates coordinates, String direction, String movements) throws IncorrectMovementException, IncorrectDirectionException {
         this.name = name;
         this.coordinates = coordinates;
-        this.recoveredTreasures = recoveredTreasures;
+        this.recoveredTreasures = 0;
         this.direction = createDirection(direction);
         this.nextMovements = createMovements(movements);
     }
@@ -34,7 +34,6 @@ public class Adventurer {
 
     public List<Movement> createMovements(String movements) {
         List<Movement> listMovements = new ArrayList<>();
-
         for(int pos = 0; pos < movements.length(); pos++){
             try{
                 Movement movement = AdventurerUtils.getMovement(movements.charAt(pos));
@@ -115,11 +114,14 @@ public class Adventurer {
     }
 
     public Movement getNextMovement(){
-        return nextMovements.get(0);
+        if(nextMovements.size() > 0){
+            return nextMovements.get(0);
+        }
+        return null;
     }
 
     public void removeNextMovement(){
-        if(nextMovements != null){
+        if(nextMovements != null && nextMovements.size() > 0){
             nextMovements.remove(0);
         }
     }

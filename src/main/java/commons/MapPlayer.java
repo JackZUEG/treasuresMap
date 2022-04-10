@@ -42,7 +42,7 @@ public abstract class MapPlayer {
         if(movement.equals(Movement.FORWARD)){
             Coordinates coordAfterMovement = AdventurerUtils.getCoordinatesAfterMovement(adventurer);
 
-            if(MapUtils.isCoordinatesInMap(map, coordAfterMovement) && !MapUtils.isSquareValidToMove(map, coordAfterMovement)){
+            if(MapUtils.isCoordinatesInMap(map, coordAfterMovement) && MapUtils.isSquareValidToMove(map, coordAfterMovement)){
                 map.getSquare(adventurer.getCoordinates()).setTaken(false);
 
                 adventurer.setCoordinates(coordAfterMovement);

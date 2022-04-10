@@ -9,16 +9,15 @@ public class LaunchTreasureHunt {
     public static void main(String[] args) throws Exception {
 
         try{
-            String fileName = args[0];
-            //String fileName = "src/main/resources/input/map1.txt";
+            String fileNameOutput = "src\\main\\resources\\output\\resultTreasureHunt";
 
             System.out.println("---------------Creation de la carte--------------");
-            Map map = MapBuilder.readMap(fileName);
+            Map map = MapBuilder.readMap(args[0]);
             System.out.println("-----------------Creation terminee---------------");
             System.out.println("-----------Chasse aux tresors en cours-----------");
             MapPlayer.playTreasureMap(map);
             System.out.println("-----------Chasse aux tresors terminee-----------");
-            MapWriter.writeTreasureMapInFile(map);
+            MapWriter.writeTreasureMapInFile(map, fileNameOutput);
             System.out.println("---------Resultat disponible dans output---------");
 
         } catch(NoDimensionsMapFound | InvalidInputFileException e){
