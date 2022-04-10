@@ -6,6 +6,7 @@ import model.map.Map;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,9 +33,9 @@ class MapWriterTest {
     void writeTreasureMapInFileExpectOk() {
         try{
             MapWriter.writeTreasureMapInFile(map, "src\\test\\resources\\output\\resultTestMapWriter");
-            File originalFile = new File("src\\test\\resources\\output\\resultTestMapWriterToCompare");
-            File fileToCompare = new File("src\\test\\resources\\output\\resultTestMapWriter");
-            assertTrue(FileUtils.contentEquals(originalFile, fileToCompare));
+            String originalFile = "src\\test\\resources\\output\\resultTestMapWriterToCompare";
+            String fileToCompare = "src\\test\\resources\\output\\resultTestMapWriter";
+            assertTrue(StringUtils.isFileEqualTo(Path.of(originalFile), Path.of(fileToCompare)));
         } catch(IOException e){
             fail(e.getCause());
         }
