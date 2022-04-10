@@ -6,7 +6,7 @@ import exception.NoDimensionsMapFound;
 import model.map.Map;
 
 public class LaunchTreasureHunt {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         try{
             String fileNameOutput = "src\\main\\resources\\output\\resultTreasureHunt";
