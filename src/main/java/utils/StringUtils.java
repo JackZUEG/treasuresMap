@@ -28,9 +28,6 @@ public abstract class StringUtils {
     }
 
     public static boolean isFileEqualTo(Path firstFile, Path secondFile) throws IOException {
-        Files.writeString(firstFile, "testing line 1 \n line 2");
-        Files.writeString(secondFile, "testing line 1 \r\n line 2");
-
         Reader reader1 = new BufferedReader(new FileReader(firstFile.toFile()));
         Reader reader2 = new BufferedReader(new FileReader(secondFile.toFile()));
 
