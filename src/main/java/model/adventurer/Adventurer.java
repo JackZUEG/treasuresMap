@@ -8,6 +8,9 @@ import utils.AdventurerUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe representant un aventurier
+ */
 public class Adventurer {
 
     private String name;

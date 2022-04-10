@@ -14,8 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe abstraite facilitant la construction de la carte a partir du fichier en entree
+ */
 public class MapBuilder {
 
+    /**
+     * Methode permettant de construire la carte
+     * @param fileName nom du fichier en entree
+     * @return Map
+     * @exception NoDimensionsMapFound Pas de dimensions trouvees
+     * @exception InvalidInputFileException Fichier invalide
+     */
     public static Map readMap(String fileName) throws NoDimensionsMapFound, InvalidInputFileException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -33,6 +43,12 @@ public class MapBuilder {
         throw new InvalidInputFileException(MessagesException.InvalidInputFileException.getMsg());
     }
 
+    /**
+     * Methode permettant de construire l'objet carte
+     * @param lines lignes du fichier en entree
+     * @return Map
+     * @exception NoDimensionsMapFound Pas de dimensions trouvees
+     */
     private static Map createMap(List<String> lines) throws NoDimensionsMapFound {
         try {
             Coordinates mapDimensions = LineParser.getMapDimensions(lines);
@@ -44,6 +60,13 @@ public class MapBuilder {
         }
     }
 
+    /**
+     * Methode permettant de construire les elements de la carte
+     * @param map carte a construire
+     * @param lines lignes du fichier en entree
+     * @exception IncorrectDirectionException Direction d'un aventurier incorrecte
+     * @exception IncorrectMovementException Mouvement d'un aventurier incorrect
+     */
     private static void createElements(Map map, List<String> lines) throws IncorrectDirectionException, IncorrectMovementException {
         for(String line: lines){
             String[] infos = line.replaceAll(" ", "").split("-");
@@ -68,6 +91,13 @@ public class MapBuilder {
         }
     }
 
+    /**
+     * Methode permettant de creer des aventuriers
+     * @param map carte a construire
+     * @param infos infos de l'aventurier
+     * @exception IncorrectDirectionException Direction d'un aventurier incorrecte
+     * @exception IncorrectMovementException Mouvement d'un aventurier incorrect
+     */
     private static void createAdventurer(Map map, String[] infos) throws IncorrectMovementException, IncorrectDirectionException {
         Coordinates adventurerCoord = new Coordinates(Integer.parseInt(infos[2]), Integer.parseInt(infos[3]));
         Adventurer adventurer = new Adventurer(infos[1], adventurerCoord, infos[4], infos[5]);
@@ -79,6 +109,11 @@ public class MapBuilder {
 
     }
 
+    /**
+     * Methode permettant de construire une case sur la carte
+     * @param map carte a construire
+     * @param infos infos de l'aventurier
+     */
     private static void createSquare(Map map, String[] infos){
         Square square = new Square(SquareType.PLAIN);
 

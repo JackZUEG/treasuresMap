@@ -1,5 +1,8 @@
 package model.adventurer;
 
+/**
+ * Enumeration representant les differents mouvements
+ */
 public enum Movement {
     FORWARD("A"),
     TURNLEFT("G"),

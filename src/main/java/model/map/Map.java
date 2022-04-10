@@ -13,6 +13,9 @@ import utils.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe representant la carte
+ */
 public class Map {
 
     private ArrayList<Adventurer> listAdventurers;

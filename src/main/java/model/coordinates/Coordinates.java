@@ -2,6 +2,9 @@ package model.coordinates;
 
 import java.util.Objects;
 
+/**
+ * Classe representant les coordonnees d'un element
+ */
 public class Coordinates {
 
     private int coordinateX;

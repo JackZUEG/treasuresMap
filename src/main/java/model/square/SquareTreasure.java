@@ -1,5 +1,8 @@
 package model.square;
 
+/**
+ * Classe representant une case tresor
+ */
 public class SquareTreasure extends Square{
 
     private int countTreasures;

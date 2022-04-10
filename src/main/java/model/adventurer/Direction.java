@@ -1,5 +1,8 @@
 package model.adventurer;
 
+/**
+ * Enumeration representant les differentes directions
+ */
 public enum Direction {
     NORTH("N"),
     EAST("E"),

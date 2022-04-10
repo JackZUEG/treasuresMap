@@ -1,5 +1,6 @@
 package commons;
 
+import exception.IncorrectDirectionException;
 import exception.IncorrectMovementException;
 import exception.MessagesException;
 import model.adventurer.Adventurer;
@@ -11,9 +12,15 @@ import utils.MapUtils;
 
 import java.util.List;
 
+/**
+ * Classe abstraite facilitant la lecture de la carte
+ */
 public abstract class MapPlayer {
 
-
+    /**
+     * Methode permettant de faire jouer les aventuriers
+     * @param map carte qui doit etre jouee
+     */
     public static void playTreasureMap(Map map) {
 
         List<Adventurer> listAdventurers = map.getListAdventurers();
@@ -36,6 +43,12 @@ public abstract class MapPlayer {
         }
     }
 
+    /**
+     * Methode permettant de jouer le mouvement d'un aventurier
+     * @param map carte qui doit etre jouee
+     * @param adventurer aventurier qui joue
+     * @exception IncorrectMovementException mouvement incorrect d'un aventurier
+     */
     private static void playMovement(Map map, Adventurer adventurer) throws IncorrectMovementException {
         Movement movement = adventurer.getNextMovement();
 

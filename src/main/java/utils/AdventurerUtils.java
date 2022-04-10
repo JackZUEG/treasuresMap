@@ -8,8 +8,17 @@ import model.adventurer.Direction;
 import model.adventurer.Movement;
 import model.coordinates.Coordinates;
 
+/**
+ * Classe abstraite de methodes liees a un aventurier
+ */
 public abstract class AdventurerUtils {
 
+    /**
+     * Methode permettant de recuperer le mouvement a partir d'une lettre
+     * @param movement mouvement a retrouver
+     * @return Movement
+     * @exception IncorrectMovementException mouvement incorrect
+     */
     public static Movement getMovement(char movement) throws IncorrectMovementException {
         switch(movement){
             case 'A':
@@ -23,6 +32,12 @@ public abstract class AdventurerUtils {
         }
     }
 
+    /**
+     * Methode permettant de recuperer la direction a partir d'une lettre
+     * @param direction direction a retrouver
+     * @return Direction
+     * @exception IncorrectDirectionException direction incorrecte
+     */
     public static Direction getDirection(String direction) throws IncorrectDirectionException {
         switch(direction){
             case "N":
@@ -38,7 +53,11 @@ public abstract class AdventurerUtils {
         }
     }
 
-
+    /**
+     * Methode permettant de recuperer les coordonnees qu'aurait un aventurier apres avoir effectue son prochain mouvement
+     * @param adventurer aventurier qui doit changer de case
+     * @return Coordinates
+     */
     public static Coordinates getCoordinatesAfterMovement(Adventurer adventurer){
         Coordinates coordinates = new Coordinates(adventurer.getCoordinates());
         if(adventurer.getNextMovement() == Movement.FORWARD){

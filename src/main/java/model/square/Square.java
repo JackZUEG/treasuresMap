@@ -2,6 +2,9 @@ package model.square;
 
 import java.util.Objects;
 
+/**
+ * Classe representant une case
+ */
 public class Square {
 
     private SquareType squareType;
