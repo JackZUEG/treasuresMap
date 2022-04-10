@@ -9,7 +9,7 @@ public class LaunchTreasureHunt {
     public static void main(String[] args) {
 
         try{
-            String fileNameOutput = "src\\main\\resources\\output\\resultTreasureHunt";
+            String fileNameOutput = "resultTreasureHunt";
 
             System.out.println("---------------Creation de la carte--------------");
             Map map = MapBuilder.readMap(args[0]);
